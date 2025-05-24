@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Translator Indonesia ke Minangkabau</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #74ebd5 0%, #ACB6E5 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            color: #2c3e50;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+            max-width: 650px;
+            width: 100%;
+            padding: 20px 50px 80px 50px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .container:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15), 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            margin-bottom: 35px;
+            font-weight: 700;
+            font-size: 2.8rem;
+            color: #34495e;
+            letter-spacing: 1px;
+        }
+
+        .header-image {
+            width: 100%; /* Mengatur lebar gambar menjadi 100% dari kontainer */
+            height: auto; /* Memastikan tinggi gambar otomatis menyesuaikan */
+            border-radius: 14px;
+            margin-bottom: 25px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        select#languageSelect {
+            padding: 12px 18px;
+            font-size: 1rem;
+            border-radius: 10px;
+            border: 2px solid #3498db;
+            outline: none;
+            color: #34495e;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            margin-bottom: 25px;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        select#languageSelect:hover,
+        select#languageSelect:focus {
+            background-color: #e8f0fe;
+            border-color: #2980b9;
+        }
+
+        textarea {
+            width: 100%;
+            height: 140px;
+            padding: 18px 20px;
+            font-size: 1.15rem;
+            border-radius: 14px;
+            border: 2px solid #d1d9e6;
+            resize: vertical;
+            font-family: 'Poppins', sans-serif;
+            color: #2c3e50;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        textarea::placeholder {
+            color: #a0aabd;
+            font-style: italic;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
+        }
+
+        button {
+            margin-top: 30px;
+            background: linear-gradient(135deg, #2980b9 0%, #3498db 100%);
+            border: none;
+            padding: 16px 40px;
+            color: white;
+            font-size: 1.25rem;
+            font-weight: 700;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+            width: 100%;
+            max-width: 320px;
+            letter-spacing: 1.1px;
+            box-shadow: 0 6px 12px rgba(41, 128, 185, 0.5);
+            user-select: none;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            box-shadow: 0 8px 16px rgba(41, 128, 185, 0.65);
+        }
+
+        button:active {
+            transform: scale(0.98);
+            box-shadow: 0 4px 8px rgba(41, 128, 185, 0.7);
+        }
+
+        .result {
+            margin-top: 35px;
+            background: #ecf0f1;
+            padding: 24px 30px;
+            border-radius: 16px;
+            min-height: 200px;
+            font-size: 1.2rem;
+            color: #34495e;
+            text-align: left;
+            white-space: pre-wrap;
+            box-shadow: inset 0 5px 12px rgba(255, 255, 255, 0.7);
+            user-select: text;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px 40px 20px;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            button {
+                font-size: 1.1rem;
+                padding: 14px 30px;
+            }
+            textarea {
+                height: 120px;
+                font-size: 1rem;
+            }
+        } 
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Translator Indonesia ke Minangkabau</h1>
+        <img src="https://i.postimg.cc/HsNxfD0p/MINANG.jpg" class="header-image" alt="Gambar Minangkabau"> 
+
+        <select id="languageSelect">
+            <option value="id-to-minang">Indonesia ke Minang</option>
+            <option value="minang-to-id">Minang ke Indonesia</option>
+        </select>
+        <textarea id="inputTxt" placeholder="Masukkan kalimat..."></textarea>
+        <button id="translateBtn">Terjemahkan</button>
+        <div class="result" id="outputTxt" aria-live="polite" aria-label="Hasil terjemahan"></div>
+    </div>
+    <script>
+        (function() {
+            const dictionaryIdToMinang = {
+                "saya": "ambo",
+                "kamu": "awak",
+                "aku": "denai",
+                "iya": "iyo",
+                "tidak": "indak",
+                "yang": "nan",
+                "pergi": "pai",
+                "datang": "tibo",
+                "satu": "ciek",
+                "dua": "duo",
+                "tiga": "tigo",
+                "kalau": "kok",
+                "dan": "jo",
+                "kabar": "kaba",
+                "bagus": "rancak",
+                "cantik": "rancak",
+                "celana": "saruak",
+                "baju": "pakaian",
+                "pesta": "baralek",
+                "ibu": "amak",
+                "ayah": "apak",
+                "kakak": "uda / uni",
+                "adik": "adiak",
+                "paman": "mamak",
+                "bibi": "etek",
+                "makan": "makan",
+                "minum": "minum",
+                "tidur": "manaruang",
+                "mandi": "babaco",
+                "main": "balia",
+                "belajar": "baraja",
+                "membantu": "mambantu",
+                "berkunjung": "manjalang",
+                "membuat": "mambuek",
+                "mengangkat": "mangangkek",
+                "mendaki": "mandaki",
+                "turun": "manurun",
+                "warung": "lapau",
+                "pasar": "pasar",
+                "mushala": "surau",
+                "sakit": "sakit",
+                "senang": "senang",
+                "kaget": "takicuah",
+                "marah": "marah",
+                "sedih": "sedih",
+                "rindu": "rindu",
+                "cinta": "cinto",
+                "lihat": "maliek",
+                "dengar": "danga",
+                "coba": "sasa",
+                "belanja": "balanjo",
+                "sama": "pado",
+                "karena": "dek",
+                "bagaimana": "baa",
+                "kerja": "karajo",
+                "serius": "saratak",
+                "hebat": "taratak",
+                "bukit": "bukik",
+                "sungai": "batang",
+                "kolam": "lubuak",
+                "tangga": "janjang",
+                "kebun": "kabun",
+                "danau": "talago",
+                "perantauan": "rantau",
+                "air": "aia",
+                "angin": "angin",
+                "bumi": "bumi",
+                "rendang": "randang",
+                "beras": "bareh",
+                "sambal": "sambuik lado",
+                "ikan": "lauak",
+                "kerupuk": "karupuak",
+                "sakit": "sakik",
+                "sangat": "sabana",
+                "bangga": "gadang hati",
+                "lega": "lapeh",
+                "ngambek": "mengambek",
+                "membaca": "membaco",
+                "menari": "manari",
+                "mengajar": "mamulang",
+                "meminta": "mamintak",
+                "merancang": "memancang",
+                "mendengar": "mandonga",
+                "menyapa": "manjali",
+                "sekarang": "kini",
+                "dahulu": "dulu",
+                "lama": "lamak",
+                "sebentar": "sabanta",
+                "sebelum": "sabalun",
+                "dimana": "dima",
+                "sini": "siko",
+                "sana": "sanak",
+                "kemudian": "kemudian",
+                "guru": "cikgu",
+                "buku": "bukua",
+                "menulis": "manulih",
+                "ribut": "gadoh",
+                "takut": "takuik",
+                "kampung": "kampuang",
+                "atas": "ateh",
+                "mahkota": "suntiang",
+                "bercerita": "babaco",
+                "melihat": "mangok",
+                "berbagi": "babagi",
+                "bermain": "bamain",
+                "berteman": "kawan",
+                "bertengkar": "bagaua",
+                "membangkitkan": "mambangkik",
+                "melepaskan": "malapeh",
+                "nakal": "malak",
+                "jahat": "baiah",
+                "sombong": "malokok",
+                "jujur": "bajalan luruih",
+                "membeli": "babali",
+                "menjual": "bajua",
+                "mahal": "mahalak",
+                "toko": "tuko",
+                "uang": "titih",
+                "gelar": "gala",
+                "tiba": "tibo",
+                "mobil": "oto",
+                "berdiri": "tagak",
+                "bersama": "bersamo",
+                "sendirian": "surang-surang",
+                "semua": "sadonyo",
+                "adalah": "adolah",
+                "sebaliknya": "sabalikan",
+                "muda": "mudo",
+                "sudah": "alah",
+                "orang": "urang",
+                "ada": "ado",
+                "untuk": "untuak",
+                "saudara": "dunsanak",
+                "mau": "ingin",
+                "marah": "murka",
+                "kemana": "kama ka",
+                "ikut": "ikuik",
+                "bapak": "apak",
+                "dia": "iko / inyo",
+                "kami": "kami",
+                "kita": "kito",
+                "mereka": "urang",
+                "siapa": "siapo",
+                "kenapa": "mangapa",
+                "bagaimana": "cama mana",
+                "dimana": "di mano",
+                "kapan": "bilo",
+                "ya": "iyo",
+                "jual": "manga",
+                "bagus": "elok",
+                "jelek": "buruak",
+                "besar": "gadang",
+                "panas": "anga",
+                "dingin": "saruak",
+                "hitam": "itam",
+                "putih": "putiah",
+                "merah": "merah",
+                "kuning": "kuniah",
+                "biru": "biru",
+                "tidur": "tagak",
+                "duduk": "duduak",
+                "berdiri": "tagak",
+                "datang": "tibo",
+                "pulang": "baliek",
+                "tinggal": "tingga",
+                "mau": "maok",
+                "sudah": "alun",
+                "belum": "belum",
+                "akan": "kanai",
+                "lagi": "lai",
+                "selalu": "barajo",
+                "sering": "tacinto",
+                "jarang": "jarang",
+                "meja": "mejo",
+                "kursi": "kursi",
+                "pintu": "pintu",
+                "jendela": "jandela",
+                "mobil": "mobil",
+                "motor": "sepeda motor",
+                "sepeda": "pit",
+                "jalan": "jalan",
+                "jalanan": "paraluan",
+                "jembatan": "jambatan",
+                "gunung": "gunuang",
+                "laut": "lautan",
+                "sungai": "batang aia",
+                "danau": "danau",
+                "hutan": "rimbo",
+                "ayam": "ayam",
+                "ikan": "ikan",
+                "sapi": "gadang",
+                "kambing": "kambing",
+                "kucing": "kuciang",
+                "anjing": "asu",
+                "burung": "buruang",
+                "buah": "buah",
+                "pisang": "pisang",
+                "apel": "apel",
+                "mangga": "pauh",
+                "jeruk": "jeruak",
+                "nasi": "bareh",
+                "roti": "roti",
+                "air": "aia",
+                "kopi": "kupi",
+                "teh": "teh",
+                "gula": "gulo",
+                "garam": "garam",
+                "pedas": "ladok",
+                "manis": "manih",
+                "asin": "asiak",
+                "pahit": "pait",
+                "panas": "anga",
+                "dingin": "saruak",
+                "rendah": "randah",
+                "panjang": "panjang",
+                "pendek": "pindik",
+                "cepat": "capat",
+                "lambat": "lambek",
+                "bagus": "elok",
+                "buruk": "buruak",
+                "sedih": "sasuai",
+                "buka": "mambuko",
+                "tutup": "mantuo",
+                "kasih": "mambari",
+                "taruh": "manaruah",
+                "teman": "kawan",
+                "matahari": "mataari",
+                "hujan": "ujuang",
+                "bulan": "bulan",
+                "bintang": "bintang",
+                "berangkat": "barangkek",
+                "istirahat": "baraduik",
+                "sholat": "sembahyang",
+                "berdoa": "badua",
+                "tidur": "tido",
+                "mengantar": "mangantuak",
+                "menjemput": "manyocek",
+                "sulit": "susuah",
+                "sepi": "santiang",
+                "lelah": "laiak",
+                "lapar": "lapa",
+                "haus": "tagauk",
+                "sangat": "bana",
+                "terpendam": "tarandam",
+                "sedang": "tengah",
+                "paman": ["aba"],
+  "adik perempuan": ["adiak"],
+  "ayah": ["amang", "buya"],
+  "ibu": ["amak", "mak"],
+  "air": ["aia"],
+  "anak": ["anak"],
+  "panas": ["angek"],
+  "atas": ["ateh", "sateh"],
+  "keluarga dari pihak ibu": ["bako"],
+  "balai": ["balai"],
+  "beras": ["bareh"],
+  "berbohong": ["baribuak"],
+  "bertemu": ["basuo"],
+  "batang": ["batang"],
+  "batu": ["batu"],
+  "kapan": ["bilo"],
+  "ayah (biasa untuk tokoh agama)": ["buya"],
+  "cerdas/pandai": ["cadiak"],
+  "pecah": ["cupuak", "batiak"],
+  "saudara": ["dunsanak"],
+  "besar": ["gadang"],
+  "tua": ["gaek", "taduah"],
+  "kilang/lumbung": ["giliang"],
+  "manisan": ["halua", "haluak"],
+  "tidak": ["indak"],
+  "minyak": ["inyiak"],
+  "jangan": ["jan"],
+  "dengan": ["jo"],
+  "berita": ["kaba"],
+  "kampung": ["kampuang"],
+  "kata": ["kato"],
+  "kuda": ["kudo"],
+  "sudah": ["lah"],
+  "tikar": ["lapiak"],
+  "mandi": ["mandiang"],
+  "ayo/mari": ["manga"],
+  "pengantin pria": ["marapulai"],
+  "yang": ["nan"],
+  "itu": ["nyo"],
+  "perempuan": ["padusi"],
+  "berlari": ["pajaleh"],
+  "pasar": ["pakan"],
+  "bagus": ["rancak"],
+  "sebut": ["sabuik"],
+  "saling rukun (pepatah)": ["saciok bak ayam"],
+  "permukaan": ["sateh"],
+  "datang/tiba": ["tibo"],
+  "orang": ["urang"],
+  "untuk": ["untuak"],
+  "kasih/beri": ["weh"],
+  "kerupuk beras": ["ampiang"],
+  "ambil": ["ambiak"],
+  "angin": ["angin"],
+  "sekam": ["antah"],
+  "arak": ["arak"],
+  "kamu/saya (tergantung konteks)": ["awak"],
+  "gagah/berani": ["bagak"],
+  "berguling": ["baguluak"],
+  "marabahaya": ["bahala"],
+  "berbahaya": ["bahanyo"],
+  "bergelombang": ["balambuik"],
+  "lepas": ["balapeh"],
+  "berpelukan": ["balinduang"],
+  "benar": ["bana"],
+  "takut/pengecut": ["banci"],
+  "ikat kepala": ["bando"],
+  "biji": ["baniah"],
+  "banyak": ["banyak"],
+  "bergoyang": ["baraguang"],
+  "berat": ["barek"],
+  "bersambung": ["basambuik"],
+  "bersama": ["basamo"],
+  "berteriak": ["basangko"],
+  "berkelahi": ["basilek"],
+  "berserakan": ["basurang"],
+  "tabuik (festival)": ["batabuik"],
+  "tepi": ["bateh"],
+  "bertinju": ["batinju"],
+  "bertukar": ["batuka"],
+  "bau": ["bau"],
+  "bawa": ["bawak"],
+  "biaya": ["bayua"],
+  "bulat": ["bulek"],
+  "buruk": ["buruak"],
+  "lihat": ["caliak"],
+  "lelah": ["capek"],
+  "cerita": ["carito"],
+  "coba": ["cubo"],
+  "curi": ["curiak"],
+  "dagu": ["daguak"],
+  "damai": ["dama"],
+  "dacing": ["danciang"],
+  "darat": ["darek"],
+  "gelar adat": ["datuk"],
+  "duduk": ["duduak", "jok"],
+  "suka": ["galak"],
+  "celana longgar": ["galembong"],
+  "ganteng": ["gantiang"],
+  "gasing": ["gasiang"],
+  "gunung": ["gunuang"],
+  "halus": ["haliah"],
+  "hanya": ["hanyo"],
+  "harta": ["harato"],
+  "hati": ["hati"],
+  "iya": ["iak"],
+  "ekor": ["ikua"],
+  "isi": ["isi"],
+  "jadi": ["jadi"],
+  "jemput": ["japuik"],
+  "jengkol": ["jariang"],
+  "kecil": ["kaciak"],
+  "ayam jantan": ["kakok"],
+  "bunga": ["kambang"],
+  "kelapa": ["karambia"],
+  "karena": ["karano"],
+  "kaya": ["kayo"],
+  "kincir": ["kincia"],
+  "lebih": ["labiah"],
+  "luar": ["lahia"],
+  "luka": ["luko"],
+  "makan": ["makan"],
+  "mahkota": ["makota"],
+  "melepas": ["malapeh"],
+  "manis": ["manih"],
+  "menyuruh": ["manyuruah"],
+  "bendera": ["marawa"],
+  "muka": ["muko"],
+  "menangis": ["namuik"],
+  "pergi": ["pai"],
+  "tempat duduk": ["pangka"],
+  "dekat": ["parak"],
+  "bodoh": ["pelo"],
+  "pusing": ["puniang"],
+  "rebung": ["rabuang"],
+  "sepakat": ["saciok"],
+  "sama": ["sama"],
+  "syariat": ["sarak"],
+  "sawah": ["sawa"],
+  "sudut": ["suduik"],
+  "tunggu": ["tanggo"],
+  "mandi tempat umum": ["tapian"],
+  "tulang": ["tuliang"],
+  "buang": ["ubuang"],
+  "ujung": ["ujuang"],
+  "orang Minang": ["urang awak"]
+            };
+
+            const dictionaryMinangToId = {
+                "ambo": "saya",
+                "awak": "kamu",
+                "den": "aku",
+                "iyo": "iya",
+                "indak": "tidak",
+                "nan": "yang",
+                "pai": "pergi",
+                "tibo": "datang",
+                "ciek": "satu",
+                "duo": "dua",
+                "tigo": "tiga",
+                "kok": "kalau",
+                "jo": "dan",
+                "kaba": "kabar",
+                "rancak": "bagus / cantik",
+                "saruak": "celana",
+                "pakaian": "baju",
+                "baralek": "pesta",
+                "amak": "ibu",
+                "apak": "ayah",
+                "uda / uni": "kakak",
+                "adiak": "adik",
+                "mamak": "paman",
+                "etek": "bibi",
+                "makan": "makan",
+                "minum": "minum",
+                "manaruang": "tidur",
+                "babaco": "mandi / bercerita",
+                "balia": "main",
+                "babaco": "mandi / bercerita",
+                "balia": "main",
+                "baraja": "belajar",
+                "mambantu": "membantu",
+                "manjalang": "berkunjung",
+                "mambuek": "membuat",
+                "mangangkek": "mengangkat",
+                "mandaki": "mendaki",
+                "manurun": "turun",
+                "lapau": "warung",
+                "pasar": "pasar",
+                "surau": "mushala",
+                "sakit": "sakit",
+                "senang": "senang",
+                "takicuah": "kaget",
+                "marah": "marah",
+                "sedih": "sedih",
+                "rindu": "rindu",
+                "cinto": "cinta",
+                "maliek": "lihat",
+                "danga": "dengar",
+                "sasa": "coba",
+                "balanjo": "belanja",
+                "pado": "sama",
+                "dek": "karena",
+                "baa": "bagaimana",
+                "karajo": "kerja",
+                "saratak": "serius",
+                "taratak": "hebat",
+                "bukik": "bukit",
+                "batang": "sungai",
+                "lubuak": "kolam",
+                "janjang": "tangga",
+                "kabun": "kebun",
+                "talago": "danau",
+                "rantau": "perantauan",
+                "aia": "air",
+                "angin": "angin",
+                "bumi": "bumi",
+                "randang": "rendang",
+                "bareh": "beras",
+                "sambuik lado": "sambal",
+                "lauak": "ikan",
+                "karupuak": "kerupuk",
+                "sakik": "sakit",
+                "sabana": "sangat",
+                "gadang hati": "bangga",
+                "lapeh": "lega",
+                "mengambek": "ngambek",
+                "membaco": "membaca",
+                "manari": "menari",
+                "mamulang": "mengajar",
+                "mamintak": "meminta",
+                "memancang": "merancang",
+                "mandonga": "mendengar",
+                "manjali": "menyapa",
+                "kini": "sekarang",
+                "dulu": "dahulu",
+                "lamak": "lama",
+                "sabanta": "sebentar",
+                "sabalun": "sebelum",
+                "dima": "dimana",
+                "siko": "sini",
+                "sanak": "sana",
+                "kemudian": "kemudian",
+                "cikgu": "guru",
+                "bukua": "buku",
+                "manulih": "menulis",
+                "gadoh": "ribut",
+                "takuik": "takut",
+                "kampuang": "kampung",
+                "ateh": "atas",
+                "suntiang": "mahkota",
+                "mangok": "melihat",
+                "babagi": "berbagi",
+                "bamain": "bermain",
+                "kawan": "berteman",
+                "bagaua": "bertengkar",
+                "mambangkik": "membangkitkan",
+                "malapeh": "melepaskan",
+                "malak": "nakal",
+                "baiah": "jahat",
+                "malokok": "sombong",
+                "bajalan luruih": "jujur",
+                "babali": "membeli",
+                "bajua": "menjual",
+                "mahalak": "mahal",
+                "tuko": "toko",
+                "titih": "uang",
+                "gala": "gelar",
+                "oto": "mobil",
+                "tagak": "berdiri",
+                "bersamo": "bersama",
+                "surang-surang": "sendirian",
+                "sadonyo": "semua",
+                "adolah": "adalah",
+                "sabalikan": "sebaliknya",
+                "mudo": "muda",
+                "alah": "sudah",
+                "urang": "orang",
+                "ado": "ada",
+                "untuak": "untuk",
+                "dunsanak": "saudara",
+                "uni": "kakak perempuan",
+                "uda": "kakak laki laki",
+                "ingin": "mau",
+                "murka": "marah",
+                "ikuik": "ikut",
+                "apak": "bapak",
+  "iko": "dia",
+  "inyo": "dia",
+  "kami": "kami",
+  "kito": "kita",
+  "urang": "mereka",
+  "siapo": "siapa",
+  "mangapa": "kenapa",
+  "cama mana": "bagaimana",
+  "di mano": "dimana",
+  "bilo": "kapan",
+  "iyo": "ya",
+  "manga": "jual",
+  "elok": "bagus",
+  "buruak": "jelek",
+  "gadang": "besar / sapi",
+  "anga": "panas",
+  "saruak": "dingin",
+  "itam": "hitam",
+  "putiah": "putih",
+  "merah": "merah",
+  "kuniah": "kuning",
+  "biru": "biru",
+  "tagak": "berdiri / tidur",
+  "duduak": "duduk",
+  "tibo": "datang",
+  "baliek": "pulang",
+  "tingga": "tinggal",
+  "maok": "mau",
+  "alun": "sudah",
+  "belum": "belum",
+  "kanai": "akan",
+  "lai": "lagi",
+  "barajo": "selalu",
+  "tacinto": "sering",
+  "jarang": "jarang",
+  "mejo": "meja",
+  "kursi": "kursi",
+  "pintu": "pintu",
+  "jandela": "jendela",
+  "mobil": "mobil",
+  "sepeda motor": "motor",
+  "pit": "sepeda",
+  "jalan": "jalan",
+  "paraluan": "jalanan",
+  "jambatan": "jembatan",
+  "gunuang": "gunung",
+  "lautan": "laut",
+  "batang aia": "sungai",
+  "danau": "danau",
+  "rimbo": "hutan",
+  "ayam": "ayam",
+  "ikan": "ikan",
+  "kambing": "kambing",
+  "kuciang": "kucing",
+  "asu": "anjing",
+  "buruang": "burung",
+  "buah": "buah",
+  "pisang": "pisang",
+  "apel": "apel",
+  "pauh": "mangga",
+  "jeruak": "jeruk",
+  "bareh": "nasi",
+  "roti": "roti",
+  "aia": "air",
+  "kupi": "kopi",
+  "teh": "teh",
+  "gulo": "gula",
+  "garam": "garam",
+  "ladok": "pedas",
+  "manih": "manis",
+  "asiak": "asin",
+  "pait": "pahit",
+  "randah": "rendah",
+  "panjang": "panjang",
+  "pindik": "pendek",
+  "capat": "cepat",
+  "lambek": "lambat",
+  "sasuai": "sedih",
+  "mambuko": "buka",
+  "mantuo": "tutup",
+  "mambari": "kasih",
+  "manaruah": "taruh",
+  "kawan": "teman",
+  "mataari": "matahari",
+  "ujuang": "hujan",
+  "bulan": "bulan",
+  "bintang": "bintang",
+  "barangkek": "berangkat",
+  "baraduik": "istirahat",
+  "sembahyang": "sholat",
+  "badua": "berdoa",
+  "tido": "tidur",
+  "mangantuak": "mengantar",
+  "manyocek": "menjemput",
+  "susuah": "sulit",
+  "santiang": "sepi",
+  "laiak": "lelah",
+  "lapa": "lapar",
+  "tagauk": "haus",
+  "bana": "sangat",
+  "tarandam": "terpendam",
+  "tengah": "sedang",
+  "aba": "paman",
+    "adiak": "adik perempuan",
+    "amang": "ayah",
+    "amak": "ibu",
+    "aia": "air",
+    "anak": "anak",
+    "angek": "panas",
+    "ateh": "atas",
+    "bako": "keluarga dari pihak ibu",
+    "balai": "balai",
+    "bareh": "beras",
+    "baribuak": "berbohong",
+    "basuo": "bertemu",
+    "batang": "batang",
+    "batu": "batu",
+    "bilo": "kapan",
+    "buya": "ayah (biasa untuk tokoh agama)",
+    "cadiak": "cerdas/pandai",
+    "cupuak": "pecah",
+    "dunsanak": "saudara",
+    "gadang": "besar",
+    "gaek": "tua",
+    "giliang": "kilang/lumbung",
+    "halua": "manisan",
+    "indak": "tidak",
+    "inyiak": "minyak",
+    "jan": "jangan",
+    "jo": "dengan",
+    "kaba": "berita",
+    "kampuang": "kampung",
+    "kato": "kata",
+    "kudo": "kuda",
+    "lah": "sudah",
+    "lapiak": "tikar",
+    "mak": "ibu",
+    "mandiang": "mandi",
+    "manga": "mari",
+    "marapulai": "pengantin pria",
+    "nan": "yang",
+    "nyo": "itu",
+    "padusi": "perempuan",
+    "pajaleh": "berlari",
+    "pakan": "pasar",
+    "rancak": "bagus",
+    "sabuik": "sebut",
+    "saciok bak ayam": "saling rukun (pepatah)",
+    "sateh": "permukaan",
+    "tibo": "datang/tiba",
+    "urang": "orang",
+    "uak": "paman (adik/kakak ibu)",
+    "uak mama": "paman (adik/kakak ayah)",
+    "untuak": "untuk",
+    "weh": "kasih/beri",
+    "ampiang": "kerupuk beras",
+    "ambiak": "ambil",
+    "amang": "ayah",
+    "angin": "angin",
+    "antah": "sekam",
+    "arak": "arak",
+    "awak": "kamu/saya (tergantung konteks)",
+    "bagak": "gagah/berani",
+    "baguluak": "berguling",
+    "bahala": "marabahaya",
+    "bahanyo": "berbahaya",
+    "balambuik": "bergelombang",
+    "balapeh": "lepas",
+    "balari": "berlari",
+    "balinduang": "berpelukan",
+    "bana": "benar",
+    "banci": "takut/pengecut",
+    "bando": "ikat kepala",
+    "baniah": "biji",
+    "banyak": "banyak",
+    "barabuak": "berbohong",
+    "baraguang": "bergoyang",
+    "barek": "berat",
+    "bareh": "beras",
+    "barubuak": "berbohong",
+    "basambuik": "bersambung",
+    "basamo": "bersama",
+    "basangko": "berteriak",
+    "basilek": "berkelahi",
+    "basurang": "berserakan",
+    "batabuik": "tabuik (festival)",
+    "bateh": "tepi",
+    "batiak": "pecah",
+    "batinju": "bertinju",
+    "batuka": "bertukar",
+    "bau": "bau",
+    "bawak": "bawa",
+    "bayua": "biaya",
+    "bulek": "bulat",
+    "buruak": "buruk",
+    "caliak": "lihat",
+    "capek": "lelah",
+    "carito": "cerita",
+    "cubo": "coba",
+    "curiak": "curi",
+    "daguak": "dagu",
+    "dama": "damai",
+    "danciang": "dacing",
+    "darek": "darat",
+    "datuk": "gelar adat",
+    "duduak": "duduk",
+    "galak": "suka",
+    "galembong": "celana longgar",
+    "gantiang": "ganteng",
+    "gasiang": "gasing",
+    "gunuang": "gunung",
+    "haliah": "halus",
+    "haluak": "manisan",
+    "hanyo": "hanya",
+    "harato": "harta",
+    "hati": "hati",
+    "iak": "iya",
+    "ikua": "ekor",
+    "indak": "tidak",
+    "isi": "isi",
+    "jadi": "jadi",
+    "japuik": "jemput",
+    "jariang": "jengkol",
+    "jo": "dengan",
+    "jok": "duduk",
+    "kaciak": "kecil",
+    "kakok": "ayam jantan",
+    "kambang": "bunga",
+    "karambia": "kelapa",
+    "karano": "karena",
+    "kayo": "kaya",
+    "kincia": "kincir",
+    "kudo": "kuda",
+    "labiah": "lebih",
+    "lahia": "luar",
+    "lapiak": "tikar",
+    "luko": "luka",
+    "makan": "makan",
+    "makota": "mahkota",
+    "malapeh": "melepas",
+    "mandi": "mandi",
+    "manga": "ayo/mari",
+    "manih": "manis",
+    "manyuruah": "menyuruh",
+    "marawa": "bendera",
+    "muko": "muka",
+    "namuik": "menangis",
+    "nyo": "itu",
+    "pai": "pergi",
+    "pangka": "tempat duduk",
+    "parak": "dekat",
+    "pelo": "bodoh",
+    "puniang": "pusing",
+    "rabuang": "rebung",
+    "rancak": "bagus",
+    "saciok": "sepakat",
+    "sabuik": "sebut",
+    "sama": "sama",
+    "sarak": "syariat",
+    "sateh": "atas",
+    "sawa": "sawah",
+    "suduik": "sudut",
+    "taduah": "tua",
+    "tanggo": "tunggu",
+    "tapian": "mandi tempat umum",
+    "tibo": "datang",
+    "tuliang": "tulang",
+    "urang": "orang",
+    "uak": "paman",
+    "ubuang": "buang",
+    "ujuang": "ujung",
+    "urang awak": "orang Minang",
+            };
+
+            function translateWord(word, direction) {
+                const stripped = word.toLowerCase().replace(/^[.,!?:;"'()]+|[.,!?:;"'()]+$/g, "");
+                if (direction === "id-to-minang") {
+                    return dictionaryIdToMinang[stripped] || word;
+                } else {
+                    return dictionaryMinangToId[stripped] || word;
+                }
+            }
+
+            function translateText(text, direction) {
+                return text.split(/\s+/).map(word => {
+                    let leadingPunct = word.match(/^[.,!?:;"'()]+/) || "";
+                    let trailingPunct = word.match(/[.,!?:;"'()]+$/) || "";
+
+                    leadingPunct = leadingPunct ? leadingPunct[0] : "";
+                    trailingPunct = trailingPunct ? trailingPunct[0] : "";
+
+                    let coreWord = word.substring(leadingPunct.length, word.length - trailingPunct.length);
+                    let translatedCore = translateWord(coreWord, direction);
+
+                    return leadingPunct + translatedCore + trailingPunct;
+                }).join(" ");
+            }
+
+            const inputTxt = document.getElementById('inputTxt');
+            const outputTxt = document.getElementById('outputTxt');
+            const translateBtn = document.getElementById('translateBtn');
+            const languageSelect = document.getElementById('languageSelect');
+
+            translateBtn.addEventListener('click', () => {
+                const input = inputTxt.value.trim();
+                if (!input) {
+                    outputTxt.textContent = "Silakan masukkan teks terlebih dahulu.";
+                    return;
+                }
+                const direction = languageSelect.value;
+                const translated = translateText(input, direction);
+                outputTxt.textContent = translated;
+            });
+        })();
+    </script>
+
+</body>
+</html>
